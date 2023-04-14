@@ -11,7 +11,10 @@ export default function StartGameScreen(props) {
       <View style={styles.imageContainer}>
         <Image
           style={styles.image}
-          source={require("../assets/images/success.png")}
+          // source={require("../assets/images/success.png")}
+          source={{
+            uri: "https://images.anime-pictures.net/d2b/d2bc272bf077af6ab4a554d8b5b767bc.jpg",
+          }}
         />
       </View>
       <BodyText>Number of rounds: {props.roundNumber}</BodyText>
