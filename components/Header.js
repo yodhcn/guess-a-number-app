@@ -1,11 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+
+import TitleText from "../components/TitleText";
 import Colors from "../constants/colors";
 
 export default function Header(props) {
   return (
     <View style={styles.hader}>
-      <Text style={styles.haderTitle}>{props.title}</Text>
+      <TitleText>{props.title}</TitleText>
     </View>
   );
 }
@@ -18,9 +20,5 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     alignItems: "center",
     justifyContent: "center",
-  },
-  haderTitle: {
-    color: "black",
-    fontSize: 18,
   },
 });
