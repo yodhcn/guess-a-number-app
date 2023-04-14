@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Button, Image } from "react-native";
 
 import BodyText from "../components/BodyText";
 import TitleText from "../components/TitleText";
+import Colors from "../constants/colors";
 
 export default function StartGameScreen(props) {
   return (
@@ -17,8 +18,14 @@ export default function StartGameScreen(props) {
           }}
         />
       </View>
-      <BodyText>Number of rounds: {props.roundNumber}</BodyText>
-      <BodyText>Number was: {props.userNumber}</BodyText>
+      <View style={styles.resultTextContainer}>
+        <BodyText style={styles.resultText}>
+          Your phone needed{" "}
+          <Text style={styles.highLight}>{props.userNumber}</Text> rounds to
+          guess the number{" "}
+          <Text style={styles.highLight}>{props.roundNumber}</Text>.
+        </BodyText>
+      </View>
       <Button title="New Game" onPress={props.onRestart} />
     </View>
   );
@@ -43,5 +50,17 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: "100%",
+  },
+  resultTextContainer: {
+    marginHorizontal: 30,
+    marginVertical: 15,
+  },
+  resultText: {
+    textAlign: "center",
+    fontSize: 20,
+  },
+  highLight: {
+    color: Colors.primary,
+    fontFamily: "open-sans-bold",
   },
 });
