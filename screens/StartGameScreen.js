@@ -6,6 +6,7 @@ import {
   Button,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
 import Card from "../components/Card";
 import Input from "../components/Input";
@@ -28,6 +29,11 @@ export default function StartGameScreen(props) {
   function firmeInputHandler() {
     const chosenNumber = parseInt(enteredValue);
     if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+      Alert.alert(
+        "Invalid number!",
+        "Number has to be a number between 1 and 99.",
+        [{ text: "OK", style: "destructive", onPress: resetInputHandler }]
+      );
       return;
     }
     setConfirmed(true);
