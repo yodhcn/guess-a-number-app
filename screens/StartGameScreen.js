@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import Card from "../components/Card";
 import Input from "../components/Input";
+import NumberContainer from "../components/NumberContainer";
 import Colors from "../constants/colors";
 
 export default function StartGameScreen(props) {
@@ -26,7 +27,7 @@ export default function StartGameScreen(props) {
     setConfirmed(false);
   }
 
-  function firmeInputHandler() {
+  function confirmeInputHandler() {
     const chosenNumber = parseInt(enteredValue);
     if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
       Alert.alert(
@@ -39,11 +40,18 @@ export default function StartGameScreen(props) {
     setConfirmed(true);
     setSelectedNumber(chosenNumber);
     setEnteredValue("");
+    Keyboard.dismiss();
   }
 
   let confirmedOutput;
   if (confirmed) {
-    confirmedOutput = <Text>Chosen Number: {selectedNumber}</Text>;
+    confirmedOutput = (
+      <Card style={styles.summaryContainer}>
+        <Text>You selected</Text>
+        <NumberContainer>{selectedNumber}</NumberContainer>
+        <Button title="Start Game" />
+      </Card>
+    );
   }
 
   return (
@@ -72,7 +80,7 @@ export default function StartGameScreen(props) {
               <Button
                 title="Confirm"
                 color={Colors.accent}
-                onPress={firmeInputHandler}
+                onPress={confirmeInputHandler}
               />
             </View>
           </View>
@@ -110,5 +118,9 @@ const styles = StyleSheet.create({
   input: {
     width: 50,
     textAlign: "center",
+  },
+  summaryContainer: {
+    marginTop: 20,
+    alignItems: "center",
   },
 });
