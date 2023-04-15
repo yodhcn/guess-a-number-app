@@ -22,9 +22,9 @@ export default function StartGameScreen(props) {
       <View style={styles.resultTextContainer}>
         <BodyText style={styles.resultText}>
           Your phone needed{" "}
-          <Text style={styles.highLight}>{props.userNumber}</Text> rounds to
+          <Text style={styles.highLight}>{props.roundNumber}</Text> rounds to
           guess the number{" "}
-          <Text style={styles.highLight}>{props.roundNumber}</Text>.
+          <Text style={styles.highLight}>{props.userNumber}</Text>.
         </BodyText>
       </View>
       <MainButton onPress={props.onRestart}>New Game</MainButton>
