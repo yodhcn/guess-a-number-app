@@ -35,7 +35,7 @@ export default function StartGameScreen(props) {
 
     const subscription = Dimensions.addEventListener("change", updateLayout);
 
-    return subscription.remove;
+    return () => subscription.remove();
   });
 
   function unmberInputHandler(inputText) {
