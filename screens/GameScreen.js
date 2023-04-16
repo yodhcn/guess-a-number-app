@@ -38,6 +38,12 @@ export default function GameScreen(props) {
   const initialGuess = generateBetween(1, 100, props.userChoice);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
   const [pastGuesses, setPastGuesses] = useState([initialGuess]);
+  const [availableDeviceWidth, setAvailableDeviceWidth] = useState([
+    Dimensions.get("window").width,
+  ]);
+  const [availableDeviceHeight, setAvailableDeviceHeight] = useState([
+    Dimensions.get("window").height,
+  ]);
   const currentLow = useRef(1);
   const currentHigh = useRef(100);
 
@@ -48,6 +54,17 @@ export default function GameScreen(props) {
       onGameOver(pastGuesses.length);
     }
   }, [currentGuess, userChoice, onGameOver]);
+
+  useEffect(() => {
+    function updateLayout() {
+      setAvailableDeviceWidth(Dimensions.get("window").width);
+      setAvailableDeviceHeight(Dimensions.get("window").height);
+    }
+
+    const subscription = Dimensions.addEventListener("change", updateLayout);
+
+    return () => subscription.remove();
+  });
 
   function nextGuessHandler(direction) {
     if (
@@ -76,8 +93,34 @@ export default function GameScreen(props) {
   }
 
   let listContainerStyle = (listContainerStyle = styles.listContainer);
-  if (Dimensions.get("window").width < 350) {
+  if (availableDeviceWidth < 350) {
     listContainerStyle = styles.listContainerBig;
+  }
+
+  if (availableDeviceHeight < 500) {
+    return (
+      <View style={styles.screen}>
+        <Text style={DefaultStyles.title}>Opponent's Guess</Text>
+        <View style={styles.controls}>
+          <MainButton onPress={() => nextGuessHandler("lower")}>
+            <Ionicons name="md-remove" size={24} color="white" />
+          </MainButton>
+          <NumberContainer>{currentGuess}</NumberContainer>
+          <MainButton onPress={() => nextGuessHandler("greater")}>
+            <Ionicons name="md-add" size={24} color="white" />
+          </MainButton>
+        </View>
+        <View style={listContainerStyle}>
+          <FlatList
+            contentContainerStyle={styles.list}
+            data={pastGuesses}
+            renderItem={(itemData) =>
+              renderListItem(pastGuesses.length, itemData)
+            }
+          />
+        </View>
+      </View>
+    );
   }
 
   return (
@@ -117,6 +160,12 @@ const styles = StyleSheet.create({
     marginTop: Dimensions.get("window").height > 600 ? 20 : 5,
     width: 400,
     maxWidth: "90%",
+  },
+  controls: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    width: "80%",
   },
   listContainer: {
     flex: 1,
